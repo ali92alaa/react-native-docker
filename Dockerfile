@@ -55,9 +55,9 @@ ENV ANDROID_SDK_FILENAME android-sdk_${ANDROID_SDK_VERSION}-linux.tgz
 ENV ANDROID_SDK_URL https://dl.google.com/android/repository/sdk-tools-linux-${ANDROID_SDK_VERSION}.zip
 ENV ANDROID_API_LEVELS android-23
 ENV ANDROID_EXTRA_COMPONENTS extra-android-m2repository,extra-google-m2repository,extra-android-support,extra-google-google_play_services
-ENV ANDROID_HOME /opt/android-sdk-linux
+ENV ANDROID_HOME /opt/android-sdk
 ENV PATH ${PATH}:${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools
-RUN mkdir -p /opt/android-sdk && cd /opt/android-sdk && \
+RUN mkdir -p ${ANDROID_HOME} && cd ${ANDROID_HOME} && \
     wget -q ${ANDROID_SDK_URL} && \
     unzip *tools*linux*.zip && \
     rm *tools*linux*.zip
