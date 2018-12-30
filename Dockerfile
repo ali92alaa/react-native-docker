@@ -1,6 +1,6 @@
 # Pull base image.
 FROM ubuntu:16.04
-MAINTAINER jpoliachik <jpoliachik@gmail.com>
+MAINTAINER Ali Ali <a.ali@theelephant.tech>
 
 LABEL Description="Node LTS with yarn and react-native"
 
@@ -49,21 +49,18 @@ RUN dpkg --add-architecture i386 && \
 # Installs Android SDK
 # ——————————
 
-ENV ANDROID_SDK_VERSION r24.4.1
-ENV ANDROID_BUILD_TOOLS_VERSION build-tools-23.0.3,build-tools-23.0.2,build-tools-23.0.1
+ENV ANDROID_SDK_VERSION 4333796
 
 ENV ANDROID_SDK_FILENAME android-sdk_${ANDROID_SDK_VERSION}-linux.tgz
-ENV ANDROID_SDK_URL http://dl.google.com/android/${ANDROID_SDK_FILENAME}
+ENV ANDROID_SDK_URL https://dl.google.com/android/repository/sdk-tools-linux-${ANDROID_SDK_VERSION}.zip
 ENV ANDROID_API_LEVELS android-23
 ENV ANDROID_EXTRA_COMPONENTS extra-android-m2repository,extra-google-m2repository,extra-android-support,extra-google-google_play_services
 ENV ANDROID_HOME /opt/android-sdk-linux
 ENV PATH ${PATH}:${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools
-RUN cd /opt && \
+RUN mkdir -p /opt/android-sdk && cd /opt/android-sdk && \
     wget -q ${ANDROID_SDK_URL} && \
-    tar -xzf ${ANDROID_SDK_FILENAME} && \
-    rm ${ANDROID_SDK_FILENAME} && \
-    echo y | android update sdk --no-ui -a --filter tools,platform-tools,${ANDROID_API_LEVELS},${ANDROID_BUILD_TOOLS_VERSION} && \
-    echo y | android update sdk --no-ui --all --filter "${ANDROID_EXTRA_COMPONENTS}"
+    unzip *tools*linux*.zip && \
+    rm *tools*linux*.zip
 
 
 # ——————————
